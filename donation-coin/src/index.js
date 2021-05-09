@@ -12,13 +12,15 @@ import './index.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Logins from './components/Logins';
-import About from './components/About'
-import Category from './components/Category'
-import Projects from './components/Projects'
+import About from './components/About';
+import Category from './components/Category';
+import Projects from './components/Projects';
+import Transaction from './components/Transaction';
+import Searchbar from './components/SearchBar';
 
 
 const Homepage = () => {
-  const [projects, setProjects] = useState([{
+  const [projects] = useState([{
     name: 'DWB',
     address: 1,
     category: 'Medical'
@@ -36,9 +38,17 @@ const Homepage = () => {
 
 ]);
 
+const [transaction] = useState([{
+  sender: '12bn4',
+  receiver: 'ae34x',
+  amount: 2
+}
+
+]);
+
 const [currentCat, setCurrentCat] = useState("");
-console.log(projects)
-    return (
+
+return (
       <Router>
       <div className="container">
         <Header />
@@ -47,6 +57,7 @@ console.log(projects)
           <Route exact path="/"><Logins /></Route>
           <Route path="/about"><About /></Route>
           <Route path="/browse"><Category setCurrentCat={setCurrentCat} /><Projects projects={projects.filter(project => project.category.includes(currentCat))}/></Route>
+          <Route path="/track"><Searchbar/><Transaction transaction={transaction}/></Route>
         </Switch>
         </div>
         <Footer />
