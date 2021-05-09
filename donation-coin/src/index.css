@@ -81,12 +81,18 @@ button:hover {
 
 
 
+.about{
+  margin: 4em auto;
+}
+
+
+
 /* -------- CATEGORY WIDGETS -------- */
 
 
 button.category{
   font-family: 'Montserrat', sans-serif;
-  display: inline-block;
+  margin: 4em auto;
   padding: 0.5em 1em;
   text-decoration: none;
 }
@@ -94,11 +100,6 @@ button.category{
 .singleProject{
  padding: 2em;
  border-top: 1px solid black;
-}
-
-.projectList{
-  padding-top: 5em;
-  text-align: center;
 }
 
 .categories{
