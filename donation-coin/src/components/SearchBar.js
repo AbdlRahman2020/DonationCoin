@@ -4,7 +4,7 @@ import Transaction from './Transaction';
 
 const SearchBar = ({ keyword }) => {
 
-    const [transactions, setTransactions] = useState([ ]);
+    const [transactions, setTransactions] = useState([]);
 
     function onKeyUp(e) {
         if (e.charCode === 13) {
@@ -21,13 +21,13 @@ const SearchBar = ({ keyword }) => {
 
     return (
         <>
-        <input
-            value={keyword}
-            placeholder={"Track a donation"}
-            onKeyPress={onKeyUp}
-            className="searchbar"
-        />
-        {transactions.map(transaction => (<Transaction key={transaction.sender} transaction={transaction} />))}
+            <input
+                value={keyword}
+                placeholder={"Track a donation"}
+                onKeyPress={onKeyUp}
+                className="searchbar"
+            />
+            {transactions.map(transaction => (<Transaction key={transaction.sender} transaction={transaction} />))}
         </>
 
     );

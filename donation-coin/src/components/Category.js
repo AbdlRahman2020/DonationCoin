@@ -1,5 +1,3 @@
-import Project from './Project';
-
 const Category = ({ setCurrentCat }) => {
 
   return (

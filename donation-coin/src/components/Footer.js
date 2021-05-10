@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
 const Footer = () => {
-
   return (
     <footer>
       <NavLink to="/" className="footerLink">Home</NavLink>

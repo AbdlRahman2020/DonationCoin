@@ -1,4 +1,4 @@
-const Project = ( { project }) => {
+const Project = ({ project }) => {
     return (
         <div className="singleProject">
             <h3>{project.name}</h3>
