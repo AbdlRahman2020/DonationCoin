@@ -5,6 +5,10 @@ contract DonationCoin {
 	// variable holding the address of the Smart Contract's Owner (Adminstrator)
 	address public owner;
 	
+	constructor ()  {
+       owner = msg.sender;
+   }
+	
 	// mappings
     mapping (address => string) public charityType; // returns string charityType of an address
     mapping (address => uint)public donorDonationCount; // returns uint; number of donations made by a donor
@@ -20,8 +24,8 @@ contract DonationCoin {
 	struct Charity
 	{
 	    address _address;
-		string category;
-		string goals;
+		string cause;
+		//string goals;
 		string name;
 	}
 
@@ -47,6 +51,10 @@ contract DonationCoin {
 
 	Donor[] public donors; // list of donors
 
+    function _registerCharity(address _address, string memory _cause, string memory _name) external{
+        require(msg.sender == owner);
+        charities.push(Charity(_address, _cause, _name));
+    }
 
 	// Register a new Donor
 	function _registerDonor(address _address, string memory _userName) public
@@ -64,7 +72,7 @@ contract DonationCoin {
         require(msg.value > 0);
         address _from = msg.sender;
         _receiver.transfer(msg.value);
-		//uint transactionID = donations.push(Donation(_from, _receiver, msg.value, message)) ;
+		//uint id = donations.push(Donation(_from, _receiver, msg.value, message)) - 1;
 		donations.push(Donation(_from, _receiver, msg.value, message)) ;
 		//donationToDonor[transactionID] = msg.sender;
 		donorDonationCount[msg.sender]++;
@@ -83,7 +91,7 @@ contract DonationCoin {
 	
     // functions to return all the donations made by a donor. params: Donor's address
     function getDonationsByDonor(address _donor) external view returns (uint[] memory) {
-        uint[] memory result = new uint[](donorDonationCount[_donor]);
+        uint[] memory  result = new uint[](donorDonationCount[_donor]);
         uint counter = 0;
         for (uint i = 0; i < donations.length; i++) {
           if (donationToDonor[i] == _donor) {
@@ -99,21 +107,9 @@ contract DonationCoin {
 	function donationOf(uint256 _id) external view returns (address) {
         return donations[_id]._from;
   }
-	
-// 	function getDonations(address _address) public view{
-// 	    //return list of donations of an address
-// 	}
-
-// 	function getBalanceInEth(address addr) public view returns(uint){
-// 		return ConvertLib.convert(getBalance(addr),2);
-// 	}
-
-// 	function getBalance(address addr) public view returns(uint) {
-// 		return balances[addr];
-// 	}
 
     function getDonation(uint256 _id) external view returns (
-        //uint id,
+        uint id,
 		address _from,
 		address _to,
 		uint amount,
@@ -126,6 +122,19 @@ contract DonationCoin {
         amount = _donation.amount;
         message = _donation.message;
         }
+        
+    function getCharityByCause(string memory _cause) external view returns( uint[] memory){
+        uint[] memory result = new uint[](charities.length);
+        uint counter = 0;
+        for (uint i = 0; i < charities.length; i++) {
+          if (keccak256(bytes(charities[i].cause)) == keccak256(bytes(_cause)))
+          {
+            result[counter] = i;
+            counter++;
+          }
+        }
+        return result;
+    }
 
     // This function sends an amount of Ether to a reciever's address, params: reciever's address.
     function sendViaCall(address payable _to) public payable {
