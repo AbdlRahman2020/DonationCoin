@@ -1,24 +1,14 @@
 pragma solidity >=0.7.0 <0.9.0;
 
-
-// User the imports and their modifiers/ functions at a later stage.
-//import "./ConvertLib.sol";
-//import "./ownable.sol";
-
-//using SafeMath for uint256;  
-//using SaFfeMath32 for uint32;
-//using SafeMath16 for uint16;
-
-
 contract DonationCoin {
 	
 	// variable holding the address of the Smart Contract's Owner (Adminstrator)
 	address public owner;
 	
 	// mappings
-    mapping (string => address) public charityType;
-    mapping (uint => address) public donationsNumber; // Number of donations made by a donor
-    mapping (uint => address) public donationToDonator; //
+    mapping (address => string) public charityType; // returns string charityType of an address
+    mapping (address => uint)public donorDonationCount; // returns uint; number of donations made by a donor
+    mapping (uint => address) public donationToDonor; // Maps the donation ID to a donor
 	
 	
 	
@@ -26,33 +16,19 @@ contract DonationCoin {
 	event NewDonation(address indexed _from, address indexed _to, uint256 _value); // Fired when a donation is made
     event NewDonor(string _userName, address _address);  // Fired when a new donor is registered
 
-    uint transactionID; // Unique identifier for each  transactionID
-    
-    constructor() public {
-        transactionID = 0;
-    }
-
-	struct Donor
-	{
-		address donor_address;
-		string  userName;
-		//uint amount;
-	}
-
-	Donor[] public donors; // list of donors
 
 	struct Charity
 	{
+	    address _address;
 		string category;
+		string goals;
 		string name;
-        address _address;
 	}
 
 	Charity[] public charities; // list of charities
 	
 	struct Donation
 	{
-	    uint id;
 		address _from;
 		address _to;
 		uint amount;
@@ -60,6 +36,16 @@ contract DonationCoin {
 	}
 
 	Donation[] public donations; // list of all donations
+	
+	struct Donor
+	{
+		address donor_address;
+		string  userName;
+		//  Create an array of the donations made by a donor. uint donations[]
+		//uint amount;
+	}
+
+	Donor[] public donors; // list of donors
 
 
 	// Register a new Donor
@@ -68,19 +54,50 @@ contract DonationCoin {
 		donors.push(Donor(_address, _userName ));
 		emit NewDonor(_userName, _address);
 	}
+	
 
-
-	function _makeDonation(address payable _receiver, uint _amount, string memory message) public payable returns(uint){
+    // This is where all the heavy lifting happens.
+    // -> When transfer is done, should increase transaction ID +1, 
+    // add the transaction to the donors array of transactions, 
+    // add the transaction to the arry of donations and emit new donations.
+	function _makeDonation(address payable _receiver, uint _amount, string memory message) external payable returns(uint){
+        require(msg.value > 0);
         address _from = msg.sender;
-        //require (getBalanceInEth(msg.sender) > amount);
-		sendViaTransfer(_receiver);
-		transactionID += 1;
-		donations.push(Donation(transactionID, _from, _receiver, _amount, message));
+        _receiver.transfer(msg.value);
+		//uint transactionID = donations.push(Donation(_from, _receiver, msg.value, message)) ;
+		donations.push(Donation(_from, _receiver, msg.value, message)) ;
+		//donationToDonor[transactionID] = msg.sender;
+		donorDonationCount[msg.sender]++;
 		emit NewDonation(msg.sender, _receiver, _amount);
 	}
 	
+	function donate() external payable {
+	    
+	}
+	
+	function balanceOf() external view returns(uint) {
+	    return address(this).balance;
+	}
+	
+	
+	
+    // functions to return all the donations made by a donor. params: Donor's address
+    function getDonationsByDonor(address _donor) external view returns (uint[] memory) {
+        uint[] memory result = new uint[](donorDonationCount[_donor]);
+        uint counter = 0;
+        for (uint i = 0; i < donations.length; i++) {
+          if (donationToDonor[i] == _donor) {
+            result[counter] = i;
+            counter++;
+          }
+        }
+        return result;
+     }
+ 
+ 
+  	// Function returns the donation of a certain userName
 	function donationOf(uint256 _id) external view returns (address) {
-        return donationToDonator[_id];
+        return donations[_id]._from;
   }
 	
 // 	function getDonations(address _address) public view{
@@ -95,19 +112,22 @@ contract DonationCoin {
 // 		return balances[addr];
 // 	}
 
- 
- function sendViaTransfer(address payable _to) public payable {
-        // This function is no longer recommended for sending Ether.
-        _to.transfer(msg.value);
-    }
+    function getDonation(uint256 _id) external view returns (
+        //uint id,
+		address _from,
+		address _to,
+		uint amount,
+	    string memory message
+        ) 
+        {
+        Donation memory _donation = donations[_id];
+        _from = _donation._from;
+        _to = _donation._to;
+        amount = _donation.amount;
+        message = _donation.message;
+        }
 
-    function sendViaSend(address payable _to) public payable {
-        // Send returns a boolean value indicating success or failure.
-        // This function is not recommended for sending Ether.
-        bool sent = _to.send(msg.value);
-        require(sent, "Failed to send Ether");
-    }
-
+    // This function sends an amount of Ether to a reciever's address, params: reciever's address.
     function sendViaCall(address payable _to) public payable {
         // Call returns a boolean value indicating success or failure.
         // This is the current recommended method to use.
