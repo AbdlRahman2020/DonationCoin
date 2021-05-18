@@ -4,15 +4,18 @@ contract DonationCoin {
 	
 	// variable holding the address of the Smart Contract's Owner (Adminstrator)
 	address public owner;
+	uint public totalDonated;
 	
 	constructor ()  {
        owner = msg.sender;
+       totalDonated = 0 ether;
    }
 	
 	// mappings
     mapping (address => string) public charityType; // returns string charityType of an address
     mapping (address => uint)public donorDonationCount; // returns uint; number of donations made by a donor
     mapping (uint => address) public donationToDonor; // Maps the donation ID to a donor
+    mapping (address => Donor) users;
 	
 	
 	
@@ -23,13 +26,15 @@ contract DonationCoin {
 
 	struct Charity
 	{
-	    address _address;
+	    //address _address;
 		string cause;
-		//string goals;
 		string name;
+		bool isApproved;
+		uint totalCollected;
 	}
 
-	Charity[] public charities; // list of charities
+	Charity[] public charitiesList; // list of charities
+	mapping (address => Charity) charities;
 	
 	struct Donation
 	{
@@ -37,29 +42,37 @@ contract DonationCoin {
 		address _to;
 		uint amount;
 	    string message; // if the user chooses not to send a message, an empty String should be sent to the function call.
+	   
 	}
 
 	Donation[] public donations; // list of all donations
 	
 	struct Donor
 	{
-		address donor_address;
-		string  userName;
-		//  Create an array of the donations made by a donor. uint donations[]
-		//uint amount;
+	    address Address;
+		string  Name;
+        
 	}
 
 	Donor[] public donors; // list of donors
 
     function _registerCharity(address _address, string memory _cause, string memory _name) external{
         require(msg.sender == owner);
-        charities.push(Charity(_address, _cause, _name));
+        Charity memory char = Charity(_cause, _name, true, 0);
+        charities[_address] = char;
+        charitiesList.push(char);
+    }
+    
+    function _removeCharity(address _address) external {
+        require(msg.sender == owner);
+        charities[_address].isApproved = false;
     }
 
 	// Register a new Donor
 	function _registerDonor(address _address, string memory _userName) public
 	{
 		donors.push(Donor(_address, _userName ));
+		//donors[_address] = donors(_userName);
 		emit NewDonor(_userName, _address);
 	}
 	
@@ -67,29 +80,28 @@ contract DonationCoin {
     // This is where all the heavy lifting happens.
     // -> When transfer is done, should increase transaction ID +1, 
     // add the transaction to the donors array of transactions, 
-    // add the transaction to the arry of donations and emit new donations.
-	function _makeDonation(address payable _receiver, uint _amount, string memory message) external payable returns(uint){
-        require(msg.value > 0);
+    // add the transaction to the list of donations and emit new donations.
+	function _makeDonation(address payable _receiver, uint _amount, string memory message) external payable {
+        require(msg.value > 0, "Please donate an amount more than 0.");
+        require(charities[_receiver].isApproved, "This Charity is no longer approved!");
         address _from = msg.sender;
         _receiver.transfer(msg.value);
 		//uint id = donations.push(Donation(_from, _receiver, msg.value, message)) - 1;
+		charities[_receiver].totalCollected += msg.value;
 		donations.push(Donation(_from, _receiver, msg.value, message)) ;
 		//donationToDonor[transactionID] = msg.sender;
 		donorDonationCount[msg.sender]++;
 		emit NewDonation(msg.sender, _receiver, _amount);
+		totalDonated += msg.value;
 	}
 	
-	function donate() external payable {
-	    
-	}
-	
+
 	function balanceOf() external view returns(uint) {
 	    return address(this).balance;
 	}
 	
 	
-	
-    // functions to return all the donations made by a donor. params: Donor's address
+    // functions to return all the donation IDs made by a donor. params: Donor's address
     function getDonationsByDonor(address _donor) external view returns (uint[] memory) {
         uint[] memory  result = new uint[](donorDonationCount[_donor]);
         uint counter = 0;
@@ -117,6 +129,7 @@ contract DonationCoin {
         ) 
         {
         Donation memory _donation = donations[_id];
+        id = _id;
         _from = _donation._from;
         _to = _donation._to;
         amount = _donation.amount;
@@ -124,10 +137,10 @@ contract DonationCoin {
         }
         
     function getCharityByCause(string memory _cause) external view returns( uint[] memory){
-        uint[] memory result = new uint[](charities.length);
+        uint[] memory result = new uint[](charitiesList.length);
         uint counter = 0;
-        for (uint i = 0; i < charities.length; i++) {
-          if (keccak256(bytes(charities[i].cause)) == keccak256(bytes(_cause)))
+        for (uint i = 0; i < charitiesList.length; i++) {
+          if (keccak256(bytes(charitiesList[i].cause)) == keccak256(bytes(_cause)))
           {
             result[counter] = i;
             counter++;
@@ -136,12 +149,4 @@ contract DonationCoin {
         return result;
     }
 
-    // This function sends an amount of Ether to a reciever's address, params: reciever's address.
-    function sendViaCall(address payable _to) public payable {
-        // Call returns a boolean value indicating success or failure.
-        // This is the current recommended method to use.
-        (bool sent, bytes memory data) = _to.call{value: msg.value}("");
-        require(sent, "Failed to send Ether");
-    }
-    
 }
