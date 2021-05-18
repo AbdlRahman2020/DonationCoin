@@ -22,7 +22,7 @@ const Projects = ({ currentCat }) => {
             address: 3,
             category: 'Wildlife'
           }]) 
-    })
+    }, [currentCat])
 
     const filteredProjects = projects.filter(project => project.category.includes(currentCat));
 
