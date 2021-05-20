@@ -20,6 +20,7 @@ import NavBar from './components/NavBar'
 import Contact from './components/Contact'
 import DonatorLogin from './components/DonatorLogin'
 import CharitySignup from './components/CharitySignup'
+import Table from './components/Table'
 import * as Web3 from "web3";
 import donationContract from './contract.json'
 
@@ -28,16 +29,16 @@ var fs = require('fs');
 
 // if (typeof web3 !=='undefined')
 // {
-//     web3 = new Web3(web3.currentProvider);  
+//     web3 = new Web3(web3.currentProvider);
 // }
 // else
 //{
-const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545')) // Run on the Ganache localhost 
+const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545')) // Run on the Ganache localhost
 //}
 
 //const web3 = require("web3");
 
-// if (typeof window.ethereum !== 'undefined') 
+// if (typeof window.ethereum !== 'undefined')
 // {
 //   web3 = new Web3(window.ethereum);
 //   // Request account access
@@ -81,13 +82,13 @@ console.log(contract);
 
 
 const Homepage = () => {
-  
+
   const [currentCat, setCurrentCat] = useState("");
   const [currentUser, setCurrentUser] = useState("") // currentUser should be a wallet which asks permission to connect to blockchain
   const [amount, setAmount] = useState(0) // the amount wants to donate to which one category
 
 
-  
+
   return (
     <Router history={Router}>
       <div className="container">
@@ -99,12 +100,13 @@ const Homepage = () => {
             <Route path="/about"><About /></Route>
             <Route path="/browse"><Category setCurrentCat={setCurrentCat} /><Projects currentCat={currentCat} /></Route>
             <Route path="/track"><Searchbar /></Route>
+            <Route path="/table"><Table /></Route>
             <Route path="/contact"><Contact /></Route>
             <Route path="/donator" component={DonatorLogin}/>
             <Route path="/"><CharitySignup /></Route>
           </Switch>
         </div>
-        
+
         <Footer />
       </div>
     </Router>
