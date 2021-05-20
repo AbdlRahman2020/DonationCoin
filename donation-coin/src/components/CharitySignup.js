@@ -96,7 +96,7 @@ const CharitySignup = () => {
                     <input type="text" id="cause" className="label" placeholder="Cause"></input>
                     <input type="text" id="name" className="label" placeholder="Name"></input>
                     <input type="button"  value="Submit" onClick={sendData} className="submit" />
-                    <input type="submit"  value="Enter" className="submit" />
+                   
                     
 
                     </form>
