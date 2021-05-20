@@ -6,11 +6,12 @@ import * as Web3 from "web3";
 
 // Checking MetaMask
 
-const web3 = new Web3(window.web3.currentProvider);
+var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'))
 
 const metamaskEnabled = async () => {
 if (window.ethereum) {
   await window.ethereum.enable()
+  web3 = new Web3(window.ethereum);
   return true
   }
  return false
@@ -81,7 +82,7 @@ const DonatorLogin = () => {
             
             <form action="" className="labelinput" onSubmit={(e) => submitInput(e)}>
                     <h1 style={{color:"#92eb49", textAlign:"center"}}>User  login</h1>
-                    <button onClick={ConnectMetaMask}>Connect to MetaMask</button>
+                    <button className="connectMetaMask" onClick={ConnectMetaMask}>Connect to MetaMask</button>
                     <input type="text" id="charityAddress" className="label" placeholder="Charity Wallet Address"/>
                     <input type="text" id="amt" className="label" placeholder="Amount in Ether"/>
                     <input type="text" id="name" className="label" placeholder="Your Name"/>
