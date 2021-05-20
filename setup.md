@@ -1,4 +1,4 @@
-## Installation
+## Setup instructions
 
 1. Install the dependencies
 2. Navigate to donation-coin
