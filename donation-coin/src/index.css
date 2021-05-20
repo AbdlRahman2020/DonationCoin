@@ -18,33 +18,30 @@ body {
   min-height: 100vh;
 }
 
+/* hide scrollbar */
+html::-webkit-scrollbar { width: 0 !important } /* Chrome, Safari */
+html { overflow: -moz-scrollbars-none; } /* Firefox */
+html { -ms-overflow-style: none; } /* Edge */
+
 .container {
   overflow: auto;
-  min-height: 300px;
+  /* min-height: 300px; */
 }
 
 .content {
-  min-height: 450px;
+  min-height: 500px;
   padding: 5em;
   width: 60%;
   margin: auto;
 }
 
-input {
-  border: 1px solid #a4a4a4;
-  padding: 15px 20px;
-  border-radius: 4px;
-  margin-bottom: 10px;
-  background: #f8f8ff;
-}
-
-
 /* -------- HEADER -------- */
 
 header {
   width: 100%;
-  /* background-color: #71db9d; */
+  /* background-color: black; */
   margin-top: 2em;
+  padding: 2em 0;
   text-align: center;
   /* background: url(images/logo1.jpg); */
 }
@@ -62,7 +59,7 @@ h3 {
   margin-left: auto;
   margin-right: auto;
   font-family: "Tangerine", cursive;
-  color: crimson;
+  color: white;
   font-size: 4rem;
 }
 /* -------- LOGINS -------- */
@@ -77,23 +74,25 @@ div.logins {
 /* -------- BUTTONS -------- */
 
 button {
-  border: 1px solid #a4a4a4;
-  padding: 15px 20px;
-  border-radius: 4px;
-  margin-bottom: 20px;
+  text-align: center;
+  font-size: inherit;
+  font-family: "Montserrat", sans-serif;
+  border-radius: 12px;
+  background-color: white;
+  border: 2px solid #0f0f0f;
 }
 
 button.LoginBtn {
   width: 30%;
-  padding: 20px 40px;
+  padding: 0.5em 1em;
   margin: 0 2em;
 
   transition-duration: 0.3s;
 }
 
 button:hover {
-  background-color: #445ba0;
-  border: 2px solid #ffffff;
+  background-color: #dadada; /* Light Grey */
+  border: 2px solid #dadada;
 }
 .label {
   color: rgb(236, 84, 8);
@@ -134,13 +133,15 @@ button.category {
 nav {
   font-size: 16px;
   margin-top: 30px;
-  margin-left: auto;
-  margin-right: auto;
+  /* margin-left: auto; */
+  /* margin-right: auto; */
+  display: flex;
+  justify-content: space-around;
   text-align: center;
   /* position:fixed; */
-  padding: 35px 0 35px 0;
+  padding: 15px 0;
   width: 100%;
-  bottom: 0px;
+  /* bottom: 0px; */
 }
 .navLink {
   font-family: "Montserrat", sans-serif;
@@ -180,12 +181,14 @@ footer {
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  position: relative;
+  /* position: absolute; */
   padding: 35px 0 35px 0;
   width: 100%;
   bottom: 0px;
 }
 .footerLink {
+  text-decoration: none;
+  display: inline-block;
   margin: 1em;
 }
 .footertext {
@@ -193,15 +196,9 @@ footer {
   font-size: 16px;
 }
 p.text {
-  color: #1eabe2;
-  text-align: center;
+  color: white;
+  text-align: left;
   padding: 1em;
-}
-
-#explaining {
-  text-align:center;
-  padding:1em;
-  color:rgb(245, 246, 247);
 }
 
 .submit {

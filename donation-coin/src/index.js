@@ -94,6 +94,7 @@ const Homepage = () => {
       <div className="container">
         <Header />
         <NavBar />
+        <div className="content">
           <Switch>
             <Route exact path="/"><Logins /></Route>
             <Route path="/about"><About /></Route>
@@ -104,6 +105,7 @@ const Homepage = () => {
             <Route path="/donator" component={DonatorLogin}/>
             <Route path="/"><CharitySignup /></Route>
           </Switch>
+          </div>
         <Footer />
       </div>
     </Router>
