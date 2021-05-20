@@ -27,21 +27,17 @@ import {contractAddress} from './ContractData.js'
 var fs = require('fs');
 
 
-const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545')) // Run on the Ganache localhost
+var web3 = new Web3(window.web3.currentProvider); // Run on the Ganache localhost
 
 const metamaskEnabled = async () => {
-
   if (window.ethereum) {
-    await window.ethereum.enable();
-    //await window.ethereum.send('eth_requestAccounts');
-    //window.web3 = new Web3(window.ethereum);
-    web3 = new Web3(window.ethereum);
-
-    return true
+      await window.ethereum.enable()
+      web3 = new Web3(window.ethereum);
+      return true
   }
 
+  
   return false
-
 }
 
 web3.eth.defaultAccount = web3.eth.accounts[0]; // set default account to first account in ganache

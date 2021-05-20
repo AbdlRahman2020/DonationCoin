@@ -7,7 +7,7 @@ import { contractAddress } from '../ContractData.js'
 
 // Checking MetaMask
 
-var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'))
+var web3 = new Web3(window.web3.currentProvider);
 
 const metamaskEnabled = async () => {
     if (window.ethereum) {
