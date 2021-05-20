@@ -47,11 +47,6 @@ const makeDonation = async () =>
         charityAddress = document.getElementById('charityAddress').value
         name = document.getElementById('name').value
         message = document.getElementById('message').value
-
-        console.log(wallet)
-        console.log(charityAddress)
-        console.log(typeof name)
-        console.log(message)
             
         return contract.methods._makeDonation(charityAddress,name,message).send({from: wallet});
     }   
@@ -79,10 +74,10 @@ const DonatorLogin = () => {
 
             
             <form action="" className="labelinput" onSubmit={(e) => submitInput(e)}>
-                    <h1 style={{color:"#92eb49", textAlign:"center", minHeight:"10vh", marginTop:"3vh"}}>User  login</h1>
+                    <h1 style={{color:"#92eb49", textAlign:"center", minHeight:"10vh", marginTop:"0.5vh"}}>User  login</h1>
                     <button onClick={ConnectMetaMask}>Connect to MetaMask</button>
                     <input type="text" id="charityAddress" className="label" placeholder="Charity Wallet Address"/>
-                    <input type="text" id="name" className="label" placeholder="Name"></input>
+                    <input type="text" id="name" className="label" placeholder="Name"/>
                     <input type="text" className="label" id="message" placeholder="Message"/>
                     <input type="button"  value="submit" onClick={makeDonation} className="submit" />
                     <input type="submit"  value="Enter" className="submit" />
