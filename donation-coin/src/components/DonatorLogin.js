@@ -81,7 +81,7 @@ const DonatorLogin = () => {
             
             <form action="" className="labelinput" onSubmit={(e) => submitInput(e)}>
                     <h1 style={{color:"#92eb49", textAlign:"center"}}>User  login</h1>
-                    <button onClick={ConnectMetaMask}>Connect to MetaMask</button>
+                    <button className="connectMetaMask" onClick={ConnectMetaMask}>Connect to MetaMask</button>
                     <input type="text" id="charityAddress" className="label" placeholder="Charity Wallet Address"/>
                     <input type="text" id="amt" className="label" placeholder="Amount in Ether"/>
                     <input type="text" id="name" className="label" placeholder="Your Name"/>
