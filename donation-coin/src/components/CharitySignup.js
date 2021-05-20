@@ -21,9 +21,7 @@ const ConnectMetaMask = async () =>
     {
         alert("MetaMask is not enabled. Please enable your MetaMask to connect your wallet")
     }
-    const account = await web3.eth.getAccounts();
-    const accountAddress = account[0];
-    document.getElementById('wallet').value = accountAddress;
+    
     console.log("Connetion to MetaMask wallet successful");
 }
 
@@ -41,10 +39,27 @@ console.log(contract);
 const sendData = async () =>
     {
         var wallet;
+        var charityAddress;
         var cause;
         var name;
 
-        wallet = document.getElementById('wallet').value
+        const account = await web3.eth.getAccounts();
+        const accountAddress = account[0];
+
+
+        wallet = accountAddress;
+
+        contract.methods.owner().call({from: wallet}).then(function (returnOwnerAddress){
+
+
+            if (returnOwnerAddress != wallet)
+            {
+                alert("You are not eligible to register your charity. Please contact us to get verified.")
+            }
+
+        });
+       
+        charityAddress = document.getElementById('charityAddress').value
         cause = document.getElementById('cause').value
         name = document.getElementById('name').value
 
@@ -52,7 +67,7 @@ const sendData = async () =>
         console.log(cause)
         console.log(name)
         
-        return contract.methods._registerCharity(wallet,cause,name).send({from: wallet});
+        return contract.methods._registerCharity(charityAddress,cause,name).send({from: wallet});
     }  
 
 
@@ -71,17 +86,19 @@ const CharitySignup = () => {
     }
 
     
-
     return (
-        <div >
+
+        
+        <div>
+                    <p id="explaining">Please note that only authenticated users can register a charity.</p>
                     <form action="" className="labelinput" onSubmit={(e) => submitInput(e)}>
                     <h3 style={{color:"#92eb49", textAlign:"center", minHeight:"10vh", marginTop:"3vh"}}>Charity registration</h3>
                     <button onClick={ConnectMetaMask}>Connect to MetaMask</button>
-                    <input type="text" id="wallet" className="label" placeholder="Wallet Address"/>
+                    <input type="text" id="charityAddress" className="label" placeholder="Wallet Address"/>
                     <input type="text" id="cause" className="label" placeholder="Cause"></input>
                     <input type="text" id="name" className="label" placeholder="Name"></input>
-                    <input type="button"  value="Submit" onClick={sendData} className="submit" />
-                    <input type="submit"  value="Enter" className="submit" />
+                    <input type="button"  value="Register" onClick={sendData} className="submit" />
+                   
                     
 
                     </form>

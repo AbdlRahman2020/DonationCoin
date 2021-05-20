@@ -3,6 +3,7 @@ import index from '../index';
 import {useState} from 'react'
 import * as Web3 from "web3";
 
+
 // Checking MetaMask
 
 const web3 = new Web3(window.web3.currentProvider);
@@ -36,6 +37,8 @@ console.log(contract);
 const makeDonation = async () =>
     {
         var wallet;
+        var amountWei;
+        var amountEther;
         var charityAddress;
         var name;
         var message;
@@ -45,15 +48,13 @@ const makeDonation = async () =>
 
         wallet = accountAddress;
         charityAddress = document.getElementById('charityAddress').value
+        amountWei = document.getElementById('amt').value
         name = document.getElementById('name').value
         message = document.getElementById('message').value
 
-        console.log(wallet)
-        console.log(charityAddress)
-        console.log(typeof name)
-        console.log(message)
+        amountEther = web3.utils.toWei(amountWei,'ether')
             
-        return contract.methods._makeDonation(charityAddress,name,message).send({from: wallet});
+        return contract.methods._makeDonation(charityAddress,name,message).send({from: wallet, value: amountEther});
     }   
  
 
@@ -79,13 +80,13 @@ const DonatorLogin = () => {
 
             
             <form action="" className="labelinput" onSubmit={(e) => submitInput(e)}>
-                    <h1 style={{color:"#92eb49", textAlign:"center", minHeight:"10vh", marginTop:"3vh"}}>User  login</h1>
+                    <h1 style={{color:"#92eb49", textAlign:"center"}}>User  login</h1>
                     <button onClick={ConnectMetaMask}>Connect to MetaMask</button>
                     <input type="text" id="charityAddress" className="label" placeholder="Charity Wallet Address"/>
-                    <input type="text" id="name" className="label" placeholder="Name"></input>
+                    <input type="text" id="amt" className="label" placeholder="Amount in Ether"/>
+                    <input type="text" id="name" className="label" placeholder="Your Name"/>
                     <input type="text" className="label" id="message" placeholder="Message"/>
-                    <input type="button"  value="submit" onClick={makeDonation} className="submit" />
-                    <input type="submit"  value="Enter" className="submit" />
+                    <input type="button"  value="Send" onClick={makeDonation} className="submit" />
             </form>
 
             

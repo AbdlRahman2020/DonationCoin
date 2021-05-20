@@ -1,4 +1,5 @@
 const About = () => {
+    
     return (
         <div className="about" >
             <p className="text">DonationCoin was born in spring 2021 and its goal is to provide a transparent and loyal communication channel between charities and their donors.</p>

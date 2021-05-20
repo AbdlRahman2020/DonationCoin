@@ -81,13 +81,13 @@ console.log(contract);
 
 
 
+
+
 const Homepage = () => {
 
   const [currentCat, setCurrentCat] = useState("");
   const [currentUser, setCurrentUser] = useState("") // currentUser should be a wallet which asks permission to connect to blockchain
   const [amount, setAmount] = useState(0) // the amount wants to donate to which one category
-
-
 
   return (
     <Router history={Router}>
@@ -105,8 +105,7 @@ const Homepage = () => {
             <Route path="/donator" component={DonatorLogin}/>
             <Route path="/"><CharitySignup /></Route>
           </Switch>
-        </div>
-
+          </div>
         <Footer />
       </div>
     </Router>
