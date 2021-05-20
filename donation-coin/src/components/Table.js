@@ -21,7 +21,7 @@ const LoadTable = async () =>
       outputHTML += "<th>Message</th>";
       outputHTML += "</tr>";
 
-      for (var i = 0; i < 10; i++) {
+      for (var i = 0; i < 50; i++) {
           contract.methods.donations(i).call().then(function (donation){
           var from = donation._from;
           var charity = donation._to;
