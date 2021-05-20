@@ -74,7 +74,6 @@ const DonatorLogin = () => {
 
         <div>
 
-
             <form action="" className="labelinput" onSubmit={(e) => submitInput(e)}>
                 <h1 style={{ color: "#92eb49", textAlign: "center" }}>User  login</h1>
                 <button className="connectMetaMask" onClick={ConnectMetaMask}>Connect to MetaMask</button>
