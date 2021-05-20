@@ -5,11 +5,12 @@ import $ from 'jquery';
 
 // Checking MetaMask
 
-const web3 = new Web3(window.web3.currentProvider);
+var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'))
 
 const metamaskEnabled = async () => {
 if (window.ethereum) {
   await window.ethereum.enable()
+  web3 = new Web3(window.ethereum);
   return true
   }
  return false
@@ -85,7 +86,7 @@ const CharitySignup = () => {
         // if create a new organization, then  add it to Category.js
     }
 
-    
+
     return (
 
         
