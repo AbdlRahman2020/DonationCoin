@@ -44,15 +44,16 @@ header {
   padding: 2em 0;
   text-align: center;
   /* background: url(images/logo1.jpg); */
+
 }
 .logo {
   opacity: 0.9;
-
   margin-left: auto;
   margin-right: auto;
   width: 20%;
   text-align: center;
 }
+
 h1,
 h2,
 h3 {
@@ -61,6 +62,11 @@ h3 {
   font-family: "Tangerine", cursive;
   color: white;
   font-size: 4rem;
+}
+
+h1.groupName {
+  font-size: 6em;
+  color: rgb(148, 97, 106);
 }
 /* -------- LOGINS -------- */
 
@@ -91,8 +97,8 @@ button.LoginBtn {
 }
 
 button:hover {
-  background-color: #dadada; /* Light Grey */
-  border: 2px solid #dadada;
+  background-color: rgb(119,74,82); /* Light Grey */
+  border: 2px solid rgb(119,74,82);
 }
 .label {
   color: rgb(236, 84, 8);
@@ -133,15 +139,13 @@ button.category {
 nav {
   font-size: 16px;
   margin-top: 30px;
-  /* margin-left: auto; */
-  /* margin-right: auto; */
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   text-align: center;
-  /* position:fixed; */
   padding: 15px 0;
   width: 100%;
-  /* bottom: 0px; */
+  background-color: rgb(0,0,0,0.4);
+
 }
 .navLink {
   font-family: "Montserrat", sans-serif;
@@ -153,7 +157,7 @@ nav {
 }
 .navtext {
   font-size: 15pt;
-  color: rgb(219, 233, 25);
+  color: white;
   font-family: "Montserrat", sans-serif;
 
   text-decoration: none;
@@ -321,4 +325,5 @@ p.text {
   border: 2px solid #000;
   padding: 10px;
   border-collapse: collapse;
+
 }
