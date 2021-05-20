@@ -171,6 +171,10 @@ contract DonationCoin {
         return result;
     }
 
+    function getDonationsLength() public view returns (uint256) {
+        return donations.length;
+    }
+
     //   	function supportDonationCoin(
     // 	    string memory _donorName,
     // 	    string memory _message)
