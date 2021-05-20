@@ -83,10 +83,10 @@ const DonatorLogin = () => {
                     <h1 style={{color:"#92eb49", textAlign:"center"}}>User  login</h1>
                     <button onClick={ConnectMetaMask}>Connect to MetaMask</button>
                     <input type="text" id="charityAddress" className="label" placeholder="Charity Wallet Address"/>
-                    <input type="text" id="amt" className="label" placeholder="Amount to Send"/>
-                    <input type="text" id="name" className="label" placeholder="Name"/>
+                    <input type="text" id="amt" className="label" placeholder="Amount in Ether"/>
+                    <input type="text" id="name" className="label" placeholder="Your Name"/>
                     <input type="text" className="label" id="message" placeholder="Message"/>
-                    <input type="button"  value="submit" onClick={makeDonation} className="submit" />
+                    <input type="button"  value="Send" onClick={makeDonation} className="submit" />
             </form>
 
             

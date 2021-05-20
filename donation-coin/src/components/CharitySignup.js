@@ -86,16 +86,18 @@ const CharitySignup = () => {
     }
 
     
-
     return (
-        <div >
+
+        
+        <div>
+                    <p id="explaining">Please note that only authenticated users can register a charity.</p>
                     <form action="" className="labelinput" onSubmit={(e) => submitInput(e)}>
                     <h3 style={{color:"#92eb49", textAlign:"center", minHeight:"10vh", marginTop:"3vh"}}>Charity registration</h3>
                     <button onClick={ConnectMetaMask}>Connect to MetaMask</button>
                     <input type="text" id="charityAddress" className="label" placeholder="Wallet Address"/>
                     <input type="text" id="cause" className="label" placeholder="Cause"></input>
                     <input type="text" id="name" className="label" placeholder="Name"></input>
-                    <input type="button"  value="Submit" onClick={sendData} className="submit" />
+                    <input type="button"  value="Register" onClick={sendData} className="submit" />
                    
                     
 

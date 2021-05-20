@@ -10,6 +10,8 @@ var contractAddress = '0x05B6463706046ADDC673f73C63c8Ca27F558c496'; // from gana
 var contract = new web3.eth.Contract(abi,contractAddress);
 console.log(contract);
 
+contract.methods.charitiesList(1).call().then(console.log)
+
 
 const LoadTable = async () =>
     {

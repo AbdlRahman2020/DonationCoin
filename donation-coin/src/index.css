@@ -30,6 +30,15 @@ body {
   margin: auto;
 }
 
+input {
+  border: 1px solid #a4a4a4;
+  padding: 15px 20px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  background: #f8f8ff;
+}
+
+
 /* -------- HEADER -------- */
 
 header {
@@ -68,12 +77,10 @@ div.logins {
 /* -------- BUTTONS -------- */
 
 button {
-  text-align: center;
-  font-size: inherit;
-  font-family: "Montserrat", sans-serif;
-  border-radius: 12px;
-  background-color: white;
-  border: 2px solid #0f0f0f;
+  border: 1px solid #a4a4a4;
+  padding: 15px 20px;
+  border-radius: 4px;
+  margin-bottom: 20px;
 }
 
 button.LoginBtn {
@@ -85,8 +92,8 @@ button.LoginBtn {
 }
 
 button:hover {
-  background-color: #d6ffea; /* Light Pastel Green */
-  border: 2px solid #d6ffea;
+  background-color: #445ba0;
+  border: 2px solid #ffffff;
 }
 .label {
   color: rgb(236, 84, 8);
@@ -173,7 +180,7 @@ footer {
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  position: absolute;
+  position: relative;
   padding: 35px 0 35px 0;
   width: 100%;
   bottom: 0px;
@@ -187,8 +194,14 @@ footer {
 }
 p.text {
   color: #1eabe2;
-  text-align: left;
+  text-align: center;
   padding: 1em;
+}
+
+#explaining {
+  text-align:center;
+  padding:1em;
+  color:rgb(245, 246, 247);
 }
 
 .submit {
